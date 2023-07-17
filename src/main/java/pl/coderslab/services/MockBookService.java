@@ -1,6 +1,7 @@
 package pl.coderslab.services;
 
 import org.springframework.stereotype.Service;
+import pl.coderslab.exception.NotFoundException;
 import pl.coderslab.model.Book;
 import pl.coderslab.repository.BooksRepository;
 
@@ -10,6 +11,7 @@ import java.util.*;
 public class MockBookService implements BookService {
 
     private final BooksRepository booksRepository;
+
     public MockBookService(BooksRepository booksRepository) {
         this.booksRepository = booksRepository;
     }
@@ -18,14 +20,15 @@ public class MockBookService implements BookService {
 
     @Override
     public List<Book> getAllBooks() {
-        return booksRepository.getList();
+        Optional<List<Book>> optionalBooks = Optional.ofNullable(booksRepository.getList());
+        return optionalBooks.orElseThrow(() -> new NotFoundException("Books not found"));
     }
 
     @Override
-    public Optional<Book> getBook(long id) {
+    public Book getBook(long id) {
         return booksRepository.getList().stream()
-                        .filter(book -> book.getId() == id)
-                        .findFirst();
+                .filter(book -> book.getId() == id)
+                .findFirst().orElseThrow(() -> new NotFoundException("Book not found"));
     }
 
     @Override
@@ -38,9 +41,9 @@ public class MockBookService implements BookService {
     @Override
     public void put(Book book) {
         List<Book> books = booksRepository.getList();
-                    books.removeIf(b -> Objects.equals(b.getId(), book.getId()));
-                    books.add(book);
-                    books.sort(Comparator.comparing(Book::getId));
+        books.removeIf(b -> Objects.equals(b.getId(), book.getId()));
+        books.add(book);
+        books.sort(Comparator.comparing(Book::getId));
     }
 
     @Override
