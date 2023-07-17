@@ -1,0 +1,115 @@
+openapi: 3.0.3
+info:
+  title: REST API - BOOKS
+  description: |-
+    This is a sample REST API for a portfolio project, showcasing my capabilities in creating RESTful services.
+    You can find out more about me and my projects at [https://github.com/MaciejakMateusz](https://github.com/MaciejakMateusz).
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/
+
+paths:
+  /books:
+    get:
+      summary: Retrieve all books
+      description: Returns a list of all books.
+      responses:
+        '200':
+          description: Successful response
+    post:
+      summary: Create a new book
+      description: Creates a new book based on the data provided and saves it to the database.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                isbn:
+                  type: string
+                title:
+                  type: string
+                author:
+                  type: string
+                publisher:
+                  type: string
+                type:
+                  type: string
+            example:
+              id: 1
+              isbn: "9780130819338"
+              title: "Java 2. Basics"
+              author: "Cay Horstmann, Gary Cornell"
+              publisher: "Helion"
+              type: "programming"
+      responses:
+        '201':
+          description: Book created successfully
+
+  /books/{id}:
+    get:
+      summary: Get book by ID
+      description: Retrieves detailed information about a book based on its ID.
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the book.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+    put:
+      summary: Update book by ID
+      description: Updates the information of a book identified by its ID.
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the book.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                isbn:
+                  type: string
+                title:
+                  type: string
+                author:
+                  type: string
+                publisher:
+                  type: string
+                type:
+                  type: string
+            example:
+              id: 1
+              isbn: "9780130819338"
+              title: "Java 2. Basics"
+              author: "Cay Horstmann, Gary Cornell"
+              publisher: "Helion"
+              type: "programming"
+      responses:
+        '200':
+          description: Book updated successfully
+    delete:
+      summary: Delete book by ID
+      description: Deletes a book from the database based on its ID.
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the book.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Book deleted successfully
