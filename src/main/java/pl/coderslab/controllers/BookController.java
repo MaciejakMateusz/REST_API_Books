@@ -9,15 +9,6 @@ import pl.coderslab.services.MockBookService;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * GET	/books	Zwraca listę wszystkich książek.
- * POST	/books	Tworzy nową książkę na podstawie danych przekazanych z formularza i zapisuje ją do bazy danych.
- * GET	/books/{id}	Wyświetla informacje o książce o podanym id.
- * PUT	/books	Zmienia informacje o książce o podanym id na nową.
- * DELETE	/books/{id}	Usuwa książkę o podanym id z bazy danych.
- **/
-
-
 @RestController
 @RequestMapping("/books")
 public class BookController {
